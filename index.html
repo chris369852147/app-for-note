@@ -1,9 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <link href="css/bootstrap.css" rel="stylesheet">
+ <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+ <script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<title></title>
 </head>
 <body>
-
+ <div class="modal fade" id="mymodal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="data-name"></h4>
+      </div>
+      <div class="modal-body" id="data">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+        <button type="button" class="btn btn-primary" id="Change">變更交易內容</button>
+      </div>
+     </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+ <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">新增一筆交易</button><br>
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">交易內容</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+        <div class="form-group">
+            <label for="recipient-name" class="control-label">日期:</label>
+            <input type="text" class="form-control" id="data-id">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">時間:</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">項目:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">金額:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">地點:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">交易對象:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+           <select id="teachers">
+            <option>選擇類別</option>
+           </select>
+          </div>
+          <div class="form-group">
+           <input id="elementary" type="radio" name="school">收入
+           <input id="junior" type="radio" name="school">支出
+          </div>
+          <div class="form-group">
+            <label for="messbirthday-text" class="control-label">備註:</label>
+            <textarea class="form-control" id="birthday"></textarea>
+          </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="save">新增</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ <div class="modal fade" id="set" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="exampleModalLabel">變更交易內容</h4>
+     </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">日期:</label>
+         <input type="text" class="form-control" id="new-id">
+        </div>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">時間:</label>
+         <input type="text" class="form-control" id="new-name">
+        </div>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">項目:</label>
+         <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">金額:</label>
+         <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">地點:</label>
+         <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">交易對象:</label>
+         <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+         <select id="new-teachers">
+          <option>選擇類別</option>
+         </select>
+        </div>
+        <div class="form-group">
+         <label for="recipient-name" class="control-label">備註:</label>
+         <textarea class="form-control" id="new-birthday"></textarea>
+        </div>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="Delete">刪除交易內容</button>
+        <button type="button" class="btn btn-primary" id="changedata">儲存變更</button>
+      </div>
+   </div>
+  </div>
+ </div>
+<table class="table table-striped">
+ <thead>
+  <tr>
+   <td>日期</td>
+   <td>項目</td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+  </tr>
+ </tbody>
+ </table>
 </body>
 </html>
