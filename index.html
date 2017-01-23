@@ -36,36 +36,50 @@
         <form>
         <div class="form-group">
             <label for="recipient-name" class="control-label">日期:</label>
-            <input type="text" class="form-control" id="data-id">
+            <input type="text" class="form-control" id="date">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="control-label">時間:</label>
-            <input type="text" class="form-control" id="name">
+            <input type="text" class="form-control" id="time">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="control-label">項目:</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="subject">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="control-label">金額:</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="price">
+          </div>
+          <div class="form-group">
+           <label for="recipient-name" class="control-label">付款方式:</label>
+           <input class="pay" type="radio" name="pay">現金
+           <input class="pay" type="radio" name="pay">信用卡
+           <input class="pay" type="radio" name="pay">轉帳
+           <input class="pay" type="radio" name="pay">儲值卡
+           <input class="pay" type="radio" name="pay">電子錢包
           </div>
           <div class="form-group">
             <label for="recipient-name" class="control-label">地點:</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="place">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="control-label">交易對象:</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="person">
           </div>
           <div class="form-group">
            <select id="teachers">
             <option>選擇類別</option>
+            <option>食品/保健</option>
+            <option>服飾/內塑衣/鞋包</option>
+            <option>娛樂</option>
+            <option>婦幼</option>
+            <option>3C/家電</option>
+            <option>精品/配飾/美妝</option>
+            <option>日用品</option>
+            <option>家具/寢飾</option>
+            <option>書籍/教育</option>
+            <option>運動休閒用品</option>
            </select>
-          </div>
-          <div class="form-group">
-           <input id="elementary" type="radio" name="school">收入
-           <input id="junior" type="radio" name="school">支出
           </div>
           <div class="form-group">
             <label for="messbirthday-text" class="control-label">備註:</label>
@@ -92,31 +106,49 @@
       <form>
         <div class="form-group">
          <label for="recipient-name" class="control-label">日期:</label>
-         <input type="text" class="form-control" id="new-id">
+         <input type="text" class="form-control" id="new-date">
         </div>
         <div class="form-group">
          <label for="recipient-name" class="control-label">時間:</label>
-         <input type="text" class="form-control" id="new-name">
+         <input type="text" class="form-control" id="new-time">
         </div>
         <div class="form-group">
          <label for="recipient-name" class="control-label">項目:</label>
-         <input type="text" class="form-control">
+         <input type="text" class="form-control" id="new-subject">
         </div>
         <div class="form-group">
          <label for="recipient-name" class="control-label">金額:</label>
-         <input type="text" class="form-control">
+         <input type="text" class="form-control" id="new-price">
+        </div>
+        <div class="form-group">
+           <label for="recipient-name" class="control-label">付款方式:</label>
+           <input class="new-pay" type="radio" name="new-pay">現金
+           <input class="new-pay" type="radio" name="new-pay">信用卡
+           <input class="new-pay" type="radio" name="new-pay">轉帳
+           <input class="new-pay" type="radio" name="new-pay">儲值卡
+           <input class="new-pay" type="radio" name="new-pay">電子錢包
         </div>
         <div class="form-group">
          <label for="recipient-name" class="control-label">地點:</label>
-         <input type="text" class="form-control">
+         <input type="text" class="form-control" id="new-place">
         </div>
         <div class="form-group">
          <label for="recipient-name" class="control-label">交易對象:</label>
-         <input type="text" class="form-control">
+         <input type="text" class="form-control" id="new-person">
         </div>
         <div class="form-group">
          <select id="new-teachers">
           <option>選擇類別</option>
+          <option>食品/保健</option>
+          <option>服飾/內塑衣/鞋包</option>
+          <option>娛樂</option>
+          <option>婦幼</option>
+          <option>3C/家電</option>
+          <option>精品/配飾/美妝</option>
+          <option>日用品</option>
+          <option>家具/寢飾</option>
+          <option>書籍/教育</option>
+          <option>運動休閒用品</option>
          </select>
         </div>
         <div class="form-group">
@@ -145,5 +177,115 @@
   </tr>
  </tbody>
  </table>
+<script type="text/javascript" src="js/fdb-all.min.js"></script>
+<script type="text/javascript">
+ //    var tr;
+	// var fdb = new ForerunnerDB();
+ //    var db = fdb.db("myclassmate");
+ //    var studentCollection = db.collection('students');
+ //    studentCollection.load();
+ //    function showModal(){
+ //    	tr = $(this)
+ //     var date=$($(this).find("td")[0]).text();
+ //     var student=studentCollection.find({
+ //       _id:_id
+ //     })[0];
+ //     console.log(student);
+ //     $("#data-name").text("關於"+student.subject);
+ //     $("#data").html("時間:"+student.time+"<br>"+"金額:"+student.price+"<br>"+"付款方式:"+student.pay+"<br>"+"地點:"+student.place+"<br>"+"交易對象:"+student.person+"<br>"+"類別:"+student.teacher+"<br>"+"備註:"+student.you);
+ //     $("#mymodal").modal("show");
+ //    }
+ //    $("#students").on("click","tr",showModal);
+ //   setTimeout(function(){
+ //   	var students =studentCollection.find();
+ //   	for (var i = 0; i < students.length; i++) {
+ //   		var date = students[i]. date;
+ //   		var subject = students[i].subject;
+ //   		$("#students").append("<tr><td>"+date+"</td><td>"+subject+"</td></tr>")
+ //   	};
+ //   },500);
+ //   $("#save").click(function(){
+ //   	var aaaa={
+ //   		date:$("#date").val(),
+ //   		time:$("#time").val(),
+ //   		subject:$("#subject").val(),
+ //   		teacher:$("#teachers").val(),
+ //   		you:$("#birthday").val()
+ //   	};
+ //   	$("#data-id").val("");
+ //   	$("#name").val("");
+ //   	$("#teachers").val();
+ //   	$("#birthday").val("");
+ //   	studentCollection.insert(aaaa);
+ //   	studentCollection.save();
+ //   	$("#exampleModal").modal('hide');
+ //   	var aaa=studentCollection.find(aaaa)[0];
+ //    $("#students").append("<tr><td>"+aaa.id+"</td><td>"+aaa.name+"</td></tr>")
+ //   });
+ //   $("#Change").click(function(){
+ //     var id=$($(tr).find("td")[0]).text();
+ //     var student=studentCollection.find({
+ //     	_id:_id
+ //     })[0];
+ //   	$("#set").modal('show');
+ //   	$("#new-id").val(student.id);
+ //   	$("#new-name").val(student.name);
+ //   	$("#new-teachers").val(student.teacher);
+ //   	$("#new-birthday").val(student.you);
+ //   });
+ //   $("#Delete").click(function(){
+ //   	var aaa=$(tr.find("td")[0]).text();
+ //   	studentCollection.remove({
+ //   		_id:aaa
+ //   	});
+ //    studentCollection.save();
+ //    tr.remove();
+ //    $("#set").modal('hide');
+ //    $("#mymodal").modal('hide');
+ //   });
+ //   $("#changedata").click(function(){
+ //   	var id=$($(tr).find("td")[0]).text();
+ //    studentCollection.update({
+ //    	id
+ //    },{
+ //    	id:$("#new-id").val(),
+ //   		name:$("#new-name").val(),
+ //   		teacher:$("#newteachers").val(),
+ //   		you:$("#new-birthday").val()
+ //    });
+ //    $("#new-id").val("");
+ //   	$("#new-name").val("");
+ //   	$("#new-teachers").val("");
+ //   	$("#new-birthday").val("");
+ //   	studentCollection.save();
+ //   	$("#set").modal('hide');
+ //   	$("#mymodal").modal('hide');
+ //   });
+ //   $("#search").on('click',function(){
+ //   	if($("#elementary").prop("checked")){
+ //   		var students=studentCollection.find({
+ //   			id:{
+ //   				$gte:60401,
+ //   				$lte:60432
+ //   			}
+ //   		});
+ //   	}
+ //   	if($("#junior").prop("checked")){
+ //   		var students=studentCollection.find({
+ //   			id:{
+ //   				$gte:91201,
+ //   				$lte:91237
+ //   			}
+ //   		});
+ //   	}
+ //   	console.log(students)
+ //   	$("#students tr").remove();
+ //   	for (var i = 0; i < students.length; i++) {
+ //   		var id = students[i]. id;
+ //   		var name = students[i].name;
+ //   		$("#students").append("<tr><td>"+id+"</td><td>"+name+"</td></tr>")
+ //   	};
+ //   });
+</script>
 </body>
 </html>
