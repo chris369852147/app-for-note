@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
  <link href="css/bootstrap.css" rel="stylesheet">
  <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
  <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -34,13 +35,9 @@
       </div>
       <div class="modal-body">
         <form>
-        <div class="form-group">
-            <label for="recipient-name" class="control-label">日期:</label>
-            <input type="text" class="form-control" id="date">
-          </div>
           <div class="form-group">
-            <label for="recipient-name" class="control-label">時間:</label>
-            <input type="text" class="form-control" id="time">
+            <label for="recipient-name" class="control-label">日期/時間:</label>
+            <input type="datetime-local" class="form-control" id="date">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="control-label">項目:</label>
@@ -108,12 +105,8 @@
     <div class="modal-body">
       <form>
         <div class="form-group">
-         <label for="recipient-name" class="control-label">日期:</label>
-         <input type="text" class="form-control" id="new-date">
-        </div>
-        <div class="form-group">
-         <label for="recipient-name" class="control-label">時間:</label>
-         <input type="text" class="form-control" id="new-time">
+         <label for="recipient-name" class="control-label">日期/時間:</label>
+         <input type="datetime-local" class="form-control" id="new-date">
         </div>
         <div class="form-group">
          <label for="recipient-name" class="control-label">項目:</label>
@@ -178,104 +171,117 @@
    <td>項目</td>
   </tr>
  </thead>
- <tbody>
-  <tr>
-  </tr>
+ <tbody id="students">
  </tbody>
- </table>
+</table>
 <script type="text/javascript" src="js/fdb-all.min.js"></script>
 <script type="text/javascript">
-// var tr;
-// var fdb = new ForerunnerDB();
-// var db = fdb.db("mymoney");
-// var studentCollection = db.collection('students');
-// studentCollection.load();
-// function showModal(){
-//  tr = $(this)
-//  var date=$($(this).find("td")[0]).text();
-//  var student=studentCollection.find({
-//    _id:_id
-//  })[0];
-//  console.log(student);
-//  $("#data-name").text("關於"+student.subject);
-//  $("#data").html("時間:"+student.time+"<br>"+"金額:"+student.price+"<br>"+"付款方式:"+student.pay+"<br>"+"地點:"+student.place+""+"交易對象:"+student.person+"<br>"+"類別:"+student.teacher+"<br>"+"備註:"+student.you);
-//  $("#mymodal").modal("show");
-// }
-// $("#students").on("click","tr",showModal);
-// setTimeout(function(){
-//  var students =studentCollection.find();
-//  for (var i = 0; i < students.length; i++) {
-// 	var date = students[i]. date;
-// 	var subject = students[i].subject;
-//    		$("#students").append("<tr><td>"+date+"</td><td>"+subject+"</td></tr>")
-//    	};
-// },500);
-// $("#save").click(function(){
-//  var aaaa={
-//  	  date:$("#date").val(),
-//  	  time:$("#time").val(),
-//  	  subject:$("#subject").val(),
-//  	  price:$("#price").val(),
-//  	  pay:$(".pay").val(),
-//  	  place:$("#place").val(),
-//  	  person:$("#person").val(),
-//  	  teacher:$("#teachers").val(),
-//  	  you:$("#birthday").val()
-//  };
-//  $("#date").val("");
-//  $("#time").val("");
-//  $("#subject").val("");
-//  $("#price").val("");
-//  $(".pay").val("");
-//  $("#place").val("");
-//  $("#person").val("");
-//  $("#teachers").val("選擇類別");
-//  $("#birthday").val("");
-//  studentCollection.insert(aaaa);
-//  studentCollection.save();
-//  $("#exampleModal").modal('hide');
-//  var aaa=studentCollection.find(aaaa)[0];
-//  $("#students").append("<tr><td>"+aaa.date+"</td><td>"+aaa.subject+"</td></tr>")
-//  });
-// $("#Change").click(function(){
-//   var id=$($(tr).find("td")[0]).text();
-//   var student=studentCollection.find({
-//   	_id:_id
-//   })[0];
-// 	$("#set").modal('show');
-// 	$("#new-date").val(student.date);
-// 	$("#new-time").val(student.time);
-// 	$("#new-teachers").val(student.teacher);
-// 	$("#new-birthday").val(student.you);
-// });
-// $("#Delete").click(function(){
-// 	var aaa=$(tr.find("td")[0]).text();
-// 	studentCollection.remove({
-// 		_id:aaa
-// 	});
-//  studentCollection.save();
-//  tr.remove();
-//  $("#set").modal('hide');
-//  $("#mymodal").modal('hide');
-// });
-// $("#changedata").click(function(){
-// 	var id=$($(tr).find("td")[0]).text();
-//  studentCollection.update({
-//  	_id
-//  },{
-//  	id:$("#new-id").val(),
-// 		name:$("#new-name").val(),
-// 		teacher:$("#newteachers").val(),
-// 		you:$("#new-birthday").val()
-//  });
-//  $("#new-id").val("");
-// 	$("#new-name").val("");
-// 	$("#new-teachers").val("");
-// 	$("#new-birthday").val("");
-// 	studentCollection.save();
-// 	$("#set").modal('hide');
-// 	$("#mymodal").modal('hide');
-// });
+var tr;
+var fdb = new ForerunnerDB();
+var db = fdb.db("mymoney");
+var studentCollection = db.collection('students');
+studentCollection.load();
+function showModal(){
+ tr = $(this)
+ var aaa=$(this).attr('data-id')
+ var student=studentCollection.find({
+   _id:aaa
+ })[0];
+ console.log(student);
+ $("#data-name").text("關於"+student.subject);
+ $("#data").html("金額:"+student.price+"<br>"+"付款方式:"+student.pay+"<br>"+"地點:"+student.place+""+"交易對象:"+student.person+"<br>"+"類別:"+student.teacher+"<br>"+"備註:"+student.you);
+ $("#mymodal").modal("show");
+}
+$("#students").on("click","tr",showModal);
+setTimeout(function(){
+ var students =studentCollection.find();
+ for (var i = 0; i < students.length; i++) {
+ 	var _id = students[i]._id
+	var date = students[i].date;
+	var subject = students[i].subject;
+   	$("#students").append(createString(_id,date,subject))
+   	};
+},500);
+$("#save").click(function(){
+ var aaaa={
+ 	  date:$("#date").val(),
+ 	  subject:$("#subject").val(),
+ 	  price:$("#price").val(),
+ 	  pay:$(".pay").val(),
+ 	  place:$("#place").val(),
+ 	  person:$("#person").val(),
+ 	  teacher:$("#teachers").val(),
+ 	  you:$("#birthday").val()
+ };
+ $("#date").val("");
+ $("#subject").val("");
+ $("#price").val("");
+ $(".pay").val("");
+ $("#place").val("");
+ $("#person").val("");
+ $("#teachers").val("選擇類別");
+ $("#birthday").val("");
+ studentCollection.insert(aaaa);
+ studentCollection.save();
+ $("#exampleModal").modal('hide');
+ var aaa=studentCollection.find(aaaa)[0];
+ $("#students").append(createString(aaa._id,aaa.date,aaa.subject));
+ });
+function createString(_id,date,subject){
+	return "<tr data-id='"+_id+"'><td>"+date+"</td><td>"+subject+"</td></tr>"
+};
+$("#Change").click(function(){
+  var _id=$($(tr).find("td")[0]).text();
+  var student=studentCollection.find({
+  	_id:_id
+  })[0];
+	$("#set").modal('show');
+	$("#new-date").val(student.date);
+	$("#subject").val(student.subject);
+ 	$("#price").val(student.price);
+ 	$(".pay").val(student.pay);
+ 	$("#place").val(student.place);
+ 	$("#person").val(student.person);
+	$("#new-teachers").val(student.teacher);
+	$("#new-birthday").val(student.you);
+});
+$("#Delete").click(function(){
+	var aaa=$(tr.find("td")[0]).text();
+	studentCollection.remove({
+		_id:aaa
+	});
+ studentCollection.save();
+ tr.remove();
+ $("#set").modal('hide');
+ $("#mymodal").modal('hide');
+});
+$("#changedata").click(function(){
+	var _id=$($(tr).find("td")[0]).text();
+    studentCollection.update({
+ 	_id
+ },{
+ 	  date:$("#new-date").val(),
+ 	  subject:$("#new-subject").val(),
+ 	  price:$("#new-price").val(),
+ 	  pay:$(".new-pay").val(),
+ 	  place:$("#new-place").val(),
+ 	  person:$("#new-person").val(),
+ 	  teacher:$("#new-teachers").val(),
+ 	  you:$("#new-birthday").val()
+ 	    
+ });
+    $("#new-date").val("");
+    $("#new-subject").val("");
+    $("#new-price").val("");
+    $(".new-pay").val("");
+    $("#new-place").val("");
+    $("#new-person").val("");
+    $("#new-teachers").val("選擇類別");
+    $("#new-birthday").val("");
+	studentCollection.save();
+	$("#set").modal('hide');
+	$("#mymodal").modal('hide');
+});
 // $("#search").on('click',function(){
 // 	if($("#elementary").prop("checked")){
 // 		var students=studentCollection.find({
