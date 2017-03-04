@@ -12,8 +12,8 @@
  <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">使用<span class ="caret"></span></a>
   <ul class="dropdown-menu">
-      <li><a id="add" data-toggle="modal" data-target="#exampleModal">新增一筆交易</a></li>
-      <li><a data-toggle="modal" data-target="#search">搜尋特定範圍的交易</a></li>
+      <li><a data-toggle="modal" data-target="#exampleModal">新增一筆交易</a></li>
+      <li><a data-toggle="modal" data-target="#search">查詢特定範圍的交易</a></li>
   </ul>
  </li>
  <div class="modal fade" id="mymodal" tabindex="-1" role="dialog">
@@ -91,7 +91,7 @@
           </div>
           <div class="form-group">
             <label for="messbirthday-text" class="control-label">備註:</label>
-            <textarea class="form-control" id="birthday"></textarea>
+            <textarea class="form-control" id="birthday" placeholder="無"></textarea>
           </div>
           </div>
         </form>
@@ -173,25 +173,25 @@
    </div>
   </div>
  </div>
- <div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+ <div class="modal fade" id="find" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">搜尋範圍</h4>
+        <h4 class="modal-title" id="exampleModalLabel">查詢範圍</h4>
       </div>
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <input type="datetime-local" class="form-control">
+            <input id="gte" type="datetime-local" class="form-control">
             <p>~</p>
-            <input type="datetime-local" class="form-control">
+            <input id="lte" type="datetime-local" class="form-control">
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" id="">搜尋</button>
+        <button type="button" class="btn btn-primary" id="search">查詢</button>
       </div>
     </div>
   </div>
@@ -231,7 +231,7 @@ setTimeout(function(){
  	var _id = dollars[i]._id
 	var date = dollars[i].date;
 	var subject = dollars[i].subject;
-   	$("#dollars").prepend(createString(_id,date,subject))
+   	$("#dollars").prepend(createString(_id,date,subject));
    	};
 },500);
 $("#save").click(function(){
@@ -291,9 +291,9 @@ $("#Delete").click(function(){
 $("#changedata").click(function(){
 	var pay=$('input[name=new-pay]:checked').val();
 	var aaa=$(tr).attr('data-id');
-    dollarCollection.update({
- 	_id
- },{
+    dollarCollection.updateById(
+ 	aaa
+  ,{
  	  date:$("#new-date").val(),
  	  subject:$("#new-subject").val(),
  	  price:$("#new-price").val(),
@@ -317,31 +317,25 @@ $("#changedata").click(function(){
 	$("#set").modal('hide');
 	$("#mymodal").modal('hide');
 });
-// $("#search").on('click',function(){
-// 	if($("#elementary").prop("checked")){
-// 		var dollars=dollarCollection.find({
-// 			id:{
-// 				$gte:60401,
-// 				$lte:60432
-// 			}
-// 		});
-// 	}
-// 	if($("#junior").prop("checked")){
-// 		var dollars=dollarCollection.find({
-// 			id:{
-// 				$gte:91201,
-// 				$lte:91237
-// 			}
-// 		});
-// 	}
-// 	console.log(dollars)
-// 	$("#dollars tr").remove();
-// 	for (var i = 0; i < dollars.length; i++) {
-// 		var id = dollars[i]. id;
-// 		var name = dollars[i].name;
-// 		$("#dollars").append("<tr><td>"+id+"</td><td>"+name+"</td></tr>")
-// 	 };
-//    });
+$("#search").click(function(){
+	var dollars=dollarCollection.find({
+		date:{
+			$gte:$("#gte").val(),
+			$lte:$("#lte").val()
+		}
+	});
+	console.log(dollars);
+	$("#dollars tr").remove();
+	for (var i = 0; i < dollars.length; i++) {
+ 	   var _id = dollars[i]._id
+	   var date = dollars[i].date;
+	   var subject = dollars[i].subject;
+   	   $("#dollars").prepend(createString(_id,date,subject));
+   	};
+   	$("#gte").val("");
+   	$("#lte").val("");
+   	$("#find").modal('hide');
+});
 </script>
 </body>
 </html>
