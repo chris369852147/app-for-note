@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
  <link href="css/bootstrap.css" rel="stylesheet">
  <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
@@ -8,6 +9,13 @@
 	<title></title>
 </head>
 <body>
+ <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">使用<span class ="caret"></span></a>
+  <ul class="dropdown-menu">
+      <li><a id="add" data-toggle="modal" data-target="#exampleModal">新增一筆交易</a></li>
+      <li><a data-toggle="modal" data-target="#search">搜尋特定範圍的交易</a></li>
+  </ul>
+ </li>
  <div class="modal fade" id="mymodal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -25,7 +33,6 @@
      </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
    </div><!-- /.modal -->
- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">新增一筆交易</button><br>
  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -78,6 +85,7 @@
             <option>運動休閒用品</option>
             <option>交通</option>
             <option>股票/基金/投資</option>
+            <option>武器/軍事</option>
             <option>其它</option>
            </select>
           </div>
@@ -147,6 +155,7 @@
           <option>運動休閒用品</option>
           <option>交通</option>
           <option>股票/基金/投資</option>
+          <option>武器/軍事</option>
           <option>其它</option>
          </select>
         </div>
@@ -164,6 +173,29 @@
    </div>
   </div>
  </div>
+ <div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">搜尋範圍</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="datetime-local" class="form-control">
+            <p>~</p>
+            <input type="datetime-local" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="">搜尋</button>
+      </div>
+    </div>
+  </div>
+ </div>
 <table class="table table-striped">
  <thead>
   <tr>
@@ -171,7 +203,7 @@
    <td>項目</td>
   </tr>
  </thead>
- <tbody id="students">
+ <tbody id="dollars">
  </tbody>
 </table>
 <script type="text/javascript" src="js/fdb-all.min.js"></script>
@@ -179,35 +211,36 @@
 var tr;
 var fdb = new ForerunnerDB();
 var db = fdb.db("mymoney");
-var studentCollection = db.collection('students');
-studentCollection.load();
+var dollarCollection = db.collection('dollars');
+dollarCollection.load();
 function showModal(){
  tr = $(this)
  var aaa=$(this).attr('data-id')
- var student=studentCollection.find({
+ var dollar=dollarCollection.find({
    _id:aaa
  })[0];
- console.log(student);
- $("#data-name").text("關於"+student.subject);
- $("#data").html("金額:"+student.price+"<br>"+"付款方式:"+student.pay+"<br>"+"地點:"+student.place+""+"交易對象:"+student.person+"<br>"+"類別:"+student.teacher+"<br>"+"備註:"+student.you);
+ console.log(dollar);
+ $("#data-name").text("關於"+dollar.subject);
+ $("#data").html("金額:"+dollar.price+"<br>"+"付款方式:"+dollar.pay+"<br>"+"地點:"+dollar.place+"<br>"+"交易對象:"+dollar.person+"<br>"+"類別:"+dollar.teacher+"<br>"+"備註:"+dollar.you);
  $("#mymodal").modal("show");
 }
-$("#students").on("click","tr",showModal);
+$("#dollars").on("click","tr",showModal);
 setTimeout(function(){
- var students =studentCollection.find();
- for (var i = 0; i < students.length; i++) {
- 	var _id = students[i]._id
-	var date = students[i].date;
-	var subject = students[i].subject;
-   	$("#students").append(createString(_id,date,subject))
+ var dollars =dollarCollection.find();
+ for (var i = 0; i < dollars.length; i++) {
+ 	var _id = dollars[i]._id
+	var date = dollars[i].date;
+	var subject = dollars[i].subject;
+   	$("#dollars").prepend(createString(_id,date,subject))
    	};
 },500);
 $("#save").click(function(){
+	var pay=$('input[name=pay]:checked').val();
  var aaaa={
  	  date:$("#date").val(),
  	  subject:$("#subject").val(),
  	  price:$("#price").val(),
- 	  pay:$(".pay").val(),
+ 	  pay:pay,
  	  place:$("#place").val(),
  	  person:$("#person").val(),
  	  teacher:$("#teachers").val(),
@@ -216,75 +249,77 @@ $("#save").click(function(){
  $("#date").val("");
  $("#subject").val("");
  $("#price").val("");
- $(".pay").val("");
+ $(".pay").removeAttr('checked');
  $("#place").val("");
  $("#person").val("");
  $("#teachers").val("選擇類別");
  $("#birthday").val("");
- studentCollection.insert(aaaa);
- studentCollection.save();
+ dollarCollection.insert(aaaa);
+ dollarCollection.save();
  $("#exampleModal").modal('hide');
- var aaa=studentCollection.find(aaaa)[0];
- $("#students").append(createString(aaa._id,aaa.date,aaa.subject));
+ var aaa=dollarCollection.find(aaaa)[0];
+ $("#dollars").prepend(createString(aaa._id,aaa.date,aaa.subject));
  });
 function createString(_id,date,subject){
 	return "<tr data-id='"+_id+"'><td>"+date+"</td><td>"+subject+"</td></tr>"
 };
 $("#Change").click(function(){
-  var _id=$($(tr).find("td")[0]).text();
-  var student=studentCollection.find({
-  	_id:_id
+  var aaa=$(tr).attr('data-id')
+  console.log(aaa)
+  var dollar=dollarCollection.find({
+  	_id:aaa
   })[0];
 	$("#set").modal('show');
-	$("#new-date").val(student.date);
-	$("#subject").val(student.subject);
- 	$("#price").val(student.price);
- 	$(".pay").val(student.pay);
- 	$("#place").val(student.place);
- 	$("#person").val(student.person);
-	$("#new-teachers").val(student.teacher);
-	$("#new-birthday").val(student.you);
+	$("#new-date").val(dollar.date);
+	$("#new-subject").val(dollar.subject);
+ 	$("#new-price").val(dollar.price);
+ 	$("#new-place").val(dollar.place);
+ 	$("#new-person").val(dollar.person);
+	$("#new-teachers").val(dollar.teacher);
+	$("#new-birthday").val(dollar.you);
 });
 $("#Delete").click(function(){
-	var aaa=$(tr.find("td")[0]).text();
-	studentCollection.remove({
+    var aaa=$(tr).attr('data-id')
+	dollarCollection.remove({
 		_id:aaa
 	});
- studentCollection.save();
+ dollarCollection.save();
+ $("#mymodal").modal('hide');
  tr.remove();
  $("#set").modal('hide');
- $("#mymodal").modal('hide');
 });
 $("#changedata").click(function(){
-	var _id=$($(tr).find("td")[0]).text();
-    studentCollection.update({
+	var pay=$('input[name=new-pay]:checked').val();
+	var aaa=$(tr).attr('data-id');
+    dollarCollection.update({
  	_id
  },{
  	  date:$("#new-date").val(),
  	  subject:$("#new-subject").val(),
  	  price:$("#new-price").val(),
- 	  pay:$(".new-pay").val(),
+ 	  pay:pay,
  	  place:$("#new-place").val(),
  	  person:$("#new-person").val(),
  	  teacher:$("#new-teachers").val(),
  	  you:$("#new-birthday").val()
  	    
  });
+    console.log($("#new-subject").val())
     $("#new-date").val("");
     $("#new-subject").val("");
     $("#new-price").val("");
-    $(".new-pay").val("");
+    $(".new-pay").removeAttr('checked');
     $("#new-place").val("");
     $("#new-person").val("");
     $("#new-teachers").val("選擇類別");
     $("#new-birthday").val("");
-	studentCollection.save();
+	dollarCollection.save();
 	$("#set").modal('hide');
 	$("#mymodal").modal('hide');
 });
 // $("#search").on('click',function(){
 // 	if($("#elementary").prop("checked")){
-// 		var students=studentCollection.find({
+// 		var dollars=dollarCollection.find({
 // 			id:{
 // 				$gte:60401,
 // 				$lte:60432
@@ -292,19 +327,19 @@ $("#changedata").click(function(){
 // 		});
 // 	}
 // 	if($("#junior").prop("checked")){
-// 		var students=studentCollection.find({
+// 		var dollars=dollarCollection.find({
 // 			id:{
 // 				$gte:91201,
 // 				$lte:91237
 // 			}
 // 		});
 // 	}
-// 	console.log(students)
-// 	$("#students tr").remove();
-// 	for (var i = 0; i < students.length; i++) {
-// 		var id = students[i]. id;
-// 		var name = students[i].name;
-// 		$("#students").append("<tr><td>"+id+"</td><td>"+name+"</td></tr>")
+// 	console.log(dollars)
+// 	$("#dollars tr").remove();
+// 	for (var i = 0; i < dollars.length; i++) {
+// 		var id = dollars[i]. id;
+// 		var name = dollars[i].name;
+// 		$("#dollars").append("<tr><td>"+id+"</td><td>"+name+"</td></tr>")
 // 	 };
 //    });
 </script>
