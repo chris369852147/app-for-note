@@ -13,7 +13,7 @@
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">使用<span class ="caret"></span></a>
   <ul class="dropdown-menu">
       <li><a data-toggle="modal" data-target="#exampleModal">新增一筆交易</a></li>
-      <li><a data-toggle="modal" data-target="#find">查詢特定範圍的交易</a></li>
+      <li><a data-toggle="modal" data-target="#find">查詢特定範圍的交易和</a></li>
   </ul>
  </li>
  <div class="modal fade" id="mymodal" tabindex="-1" role="dialog">
@@ -228,7 +228,7 @@ $("#dollars").on("click","tr",showModal);
 setTimeout(function(){
  var dollars =dollarCollection.find();
  for (var i = 0; i < dollars.length; i++) {
- 	var _id = dollars[i]._id
+ 	var _id = dollars[i]._id;
 	var date = dollars[i].date;
 	var subject = dollars[i].subject;
    	$("#dollars").prepend(createString(_id,date,subject));
@@ -236,7 +236,7 @@ setTimeout(function(){
 },500);
 $("#save").click(function(){
 	var pay=$('input[name=pay]:checked').val();
- var aaaa={
+    var aaaa={
  	  date:$("#date").val(),
  	  subject:$("#subject").val(),
  	  price:$("#price").val(),
@@ -323,6 +323,8 @@ $("#search").click(function(){
 			$gte:$("#gte").val(),
 			$lte:$("#lte").val()
 		}
+	},{
+		$orderBy:{date:1}
 	});
 	console.log(dollars);
 	$("#dollars tr").remove();
